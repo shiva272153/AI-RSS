@@ -1,0 +1,122 @@
+# ============================================
+#  AI Resume Screening System — .gitignore
+#  Covers: Frontend, Backend, ML Engine
+# ============================================
+
+# ========== DEPENDENCIES ==========
+node_modules/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+pip-log.txt
+pip-delete-this-directory.txt
+
+# ========== ENVIRONMENT / SECRETS ==========
+# ⚠️ CRITICAL: Never push secrets, API keys, or DB credentials
+.env
+.env.*
+.env.local
+.env.development
+.env.production
+.env.staging
+*.env
+!.env.example
+
+# ========== BUILD OUTPUT ==========
+dist/
+dist-ssr/
+build/
+*.local
+
+# ========== UPLOADED RESUMES ==========
+# ⚠️ CRITICAL: User-uploaded resumes contain personal data (PII)
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# ========== PYTHON VIRTUAL ENVIRONMENTS ==========
+venv/
+env/
+.venv/
+ENV/
+.conda/
+
+# ========== PYTHON / ML ARTIFACTS ==========
+*.egg-info/
+*.egg
+*.whl
+*.so
+*.dylib
+.eggs/
+*.manifest
+*.spec
+*.pkl
+*.joblib
+*.h5
+*.model
+
+# ========== NLTK DATA ==========
+nltk_data/
+
+# ========== IDE / EDITORS ==========
+.vscode/
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+
+# ========== OS GENERATED FILES ==========
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# ========== LOGS ==========
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ========== TESTING / COVERAGE ==========
+coverage/
+.nyc_output/
+*.lcov
+.pytest_cache/
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+
+# ========== MISC ==========
+*.bak
+*.tmp
+*.temp
+*.cache
+.eslintcache
+.parcel-cache/
+.turbo/
+
+# ========== PACKAGE LOCK (optional) ==========
+# Uncomment if you don't want to track lock files
+# package-lock.json
+# yarn.lock

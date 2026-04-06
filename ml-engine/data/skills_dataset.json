@@ -1,0 +1,73 @@
+{
+    "programming_languages": [
+        "python", "java", "javascript", "typescript", "c", "c++", "c#",
+        "ruby", "php", "swift", "kotlin", "go", "rust", "scala", "r",
+        "matlab", "perl", "dart", "lua", "shell", "bash", "sql", "html", "css",
+        "objective-c", "assembly", "vba", "groovy", "haskell", "elixir",
+        "clojure", "fortran", "cobol", "visual basic"
+    ],
+    "frameworks": [
+        "react", "angular", "vue", "next.js", "nuxt", "express", "django",
+        "flask", "spring", "spring boot", "laravel", ".net", "asp.net",
+        "ruby on rails", "fastapi", "flutter", "react native", "electron",
+        "svelte", "tailwind", "bootstrap", "jquery", "node.js", "nodejs",
+        "gatsby", "remix", "astro", "nest.js", "nestjs", "koa", "hapi",
+        "sinatra", "phoenix", "gin", "fiber", "echo", "tornado", "pyramid",
+        "bottle", "streamlit", "gradio"
+    ],
+    "databases": [
+        "mysql", "postgresql", "mongodb", "sqlite", "oracle", "redis",
+        "elasticsearch", "dynamodb", "cassandra", "firebase", "supabase",
+        "mariadb", "neo4j", "couchdb", "influxdb", "cockroachdb",
+        "memcached", "etcd"
+    ],
+    "cloud_devops": [
+        "aws", "azure", "gcp", "google cloud", "docker", "kubernetes",
+        "jenkins", "terraform", "ansible", "ci/cd", "github actions",
+        "gitlab ci", "nginx", "apache", "linux", "heroku", "vercel",
+        "netlify", "cloudflare", "digital ocean", "vagrant", "puppet",
+        "chef", "prometheus", "grafana", "datadog", "new relic",
+        "circleci", "travis ci", "bamboo", "argocd", "helm"
+    ],
+    "data_science_ml": [
+        "machine learning", "deep learning", "tensorflow", "pytorch",
+        "scikit-learn", "pandas", "numpy", "matplotlib", "seaborn",
+        "natural language processing", "nlp", "computer vision",
+        "data analysis", "data visualization", "statistics",
+        "neural network", "random forest", "regression", "classification",
+        "clustering", "keras", "opencv", "spark", "hadoop", "tableau",
+        "power bi", "xgboost", "lightgbm", "catboost", "hugging face",
+        "transformers", "bert", "gpt", "langchain", "rag",
+        "reinforcement learning", "generative ai", "llm",
+        "feature engineering", "model deployment", "mlops"
+    ],
+    "tools": [
+        "git", "github", "gitlab", "bitbucket", "jira", "confluence",
+        "slack", "trello", "figma", "adobe", "photoshop", "postman",
+        "swagger", "vs code", "intellij", "eclipse", "vim", "webpack",
+        "vite", "npm", "yarn", "pip", "maven", "gradle", "cmake",
+        "make", "latex", "jupyter", "colab", "notion", "asana",
+        "monday.com", "clickup", "miro", "canva", "blender"
+    ],
+    "soft_skills": [
+        "leadership", "communication", "teamwork", "problem solving",
+        "critical thinking", "time management", "project management",
+        "agile", "scrum", "collaboration", "adaptability", "creativity",
+        "analytical", "presentation", "mentoring", "negotiation",
+        "decision making", "conflict resolution", "emotional intelligence",
+        "public speaking", "strategic thinking", "attention to detail",
+        "multitasking", "customer service", "interpersonal skills"
+    ],
+    "concepts": [
+        "rest api", "graphql", "microservices", "api", "oop",
+        "object oriented", "design patterns", "solid", "mvc",
+        "data structures", "algorithms", "system design", "testing",
+        "unit testing", "integration testing", "tdd", "bdd",
+        "responsive design", "seo", "accessibility", "security",
+        "authentication", "authorization", "encryption", "websockets",
+        "real-time", "caching", "load balancing", "database design",
+        "normalization", "indexing", "sharding", "replication",
+        "message queue", "event driven", "serverless", "saas",
+        "devops", "continuous integration", "continuous deployment"
+    ]
+}
