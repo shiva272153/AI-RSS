@@ -126,13 +126,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="footer">
-        <div className="container">
-          <p>&copy; 2026 AI Resume Screening System. Final Year Project.</p>
-        </div>
-      </footer>
     </div>
   );
 }

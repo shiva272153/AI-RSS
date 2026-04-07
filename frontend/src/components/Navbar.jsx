@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { FiLogOut, FiUser, FiBriefcase, FiFileText, FiHome } from 'react-icons/fi';
 import { HiOutlineSparkles } from 'react-icons/hi2';
@@ -7,11 +7,14 @@ import './Navbar.css';
 export default function Navbar() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleLogout = () => {
     logout();
     navigate('/login');
   };
+
+  const isActive = (path) => location.pathname === path;
 
   return (
     <nav className="navbar">
@@ -24,41 +27,39 @@ export default function Navbar() {
         <div className="navbar-links">
           {!user ? (
             <>
-              <Link to="/login" className="nav-link">Login</Link>
+              <Link to="/login" className={`nav-link ${isActive('/login') ? 'nav-link-active' : ''}`}>Login</Link>
               <Link to="/register" className="btn btn-primary btn-sm">Get Started</Link>
             </>
           ) : (
             <>
               {user.role === 'candidate' && (
                 <>
-                  <Link to="/candidate/dashboard" className="nav-link">
-                    <FiHome size={16} /> Dashboard
+                  <Link to="/candidate/dashboard" className={`nav-link ${isActive('/candidate/dashboard') ? 'nav-link-active' : ''}`}>
+                    <FiHome size={16} /> <span>Dashboard</span>
                   </Link>
-                  <Link to="/jobs" className="nav-link">
-                    <FiBriefcase size={16} /> Jobs
+                  <Link to="/jobs" className={`nav-link ${isActive('/jobs') ? 'nav-link-active' : ''}`}>
+                    <FiBriefcase size={16} /> <span>Jobs</span>
                   </Link>
-                  <Link to="/candidate/resume" className="nav-link">
-                    <FiFileText size={16} /> Resume
+                  <Link to="/candidate/resume" className={`nav-link ${isActive('/candidate/resume') ? 'nav-link-active' : ''}`}>
+                    <FiFileText size={16} /> <span>Resume</span>
                   </Link>
                 </>
               )}
               {user.role === 'recruiter' && (
                 <>
-                  <Link to="/recruiter/dashboard" className="nav-link">
-                    <FiHome size={16} /> Dashboard
-                  </Link>
-                  <Link to="/recruiter/jobs" className="nav-link">
-                    <FiBriefcase size={16} /> My Jobs
+                  <Link to="/recruiter/dashboard" className={`nav-link ${isActive('/recruiter/dashboard') ? 'nav-link-active' : ''}`}>
+                    <FiHome size={16} /> <span>Dashboard</span>
                   </Link>
                 </>
               )}
+              <div className="nav-divider"></div>
               <div className="nav-user">
-                <FiUser size={16} />
-                <span>{user.name}</span>
+                <FiUser size={14} />
+                <span className="nav-user-name">{user.name}</span>
                 <span className="badge badge-primary">{user.role}</span>
               </div>
               <button onClick={handleLogout} className="btn btn-secondary btn-sm" id="logout-btn">
-                <FiLogOut size={14} /> Logout
+                <FiLogOut size={14} /> <span>Logout</span>
               </button>
             </>
           )}

@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -52,7 +53,10 @@ export default function App() {
     <AuthProvider>
       <Router>
         <Navbar />
-        <AppRoutes />
+        <main className="app-main">
+          <AppRoutes />
+        </main>
+        <Footer />
       </Router>
     </AuthProvider>
   );
