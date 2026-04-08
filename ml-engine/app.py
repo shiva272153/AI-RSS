@@ -12,8 +12,11 @@ from skill_extractor import extract_skills, compare_skills
 app = Flask(__name__)
 CORS(app)
 
+# ============ FLASK CONFIG ============
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16 MB max upload
+
 # ============ LOAD TRAINED MODEL ON STARTUP ============
-print("🧠 ML Engine starting...")
+print("ML Engine starting...")
 model_loaded = load_trained_model()
 
 
@@ -222,4 +225,4 @@ if __name__ == '__main__':
     print("   POST /predict-category  - Predict resume job category")
     print("   GET  /model-info        - Get trained model info")
     print("   GET  /health            - Health check")
-    app.run(host='0.0.0.0', port=5001, debug=True)
+    app.run(host='0.0.0.0', port=5001, debug=False, threaded=True)

@@ -34,23 +34,42 @@ const uploadResume = async (req, res, next) => {
       fileType: fileType
     });
 
-    // Send file to ML engine for text extraction
+    // Send file to ML engine for text extraction (with retry)
     try {
       const absolutePath = path.join(__dirname, '..', resume.filePath);
-      const formData = new FormData();
-      const fileBuffer = fs.readFileSync(absolutePath);
-      const blob = new Blob([fileBuffer]);
-      formData.append('file', blob, req.file.originalname);
-      formData.append('file_type', fileType);
+      const FormData = require('form-data');
 
-      const mlResponse = await axios.post(`${ML_ENGINE_URL}/extract-text`, formData, {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      });
+      const sendToML = async () => {
+        const formData = new FormData();
+        formData.append('file', fs.createReadStream(absolutePath), {
+          filename: req.file.originalname,
+          contentType: fileType === 'pdf' ? 'application/pdf' : 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+        });
+        formData.append('file_type', fileType);
+
+        return axios.post(`${ML_ENGINE_URL}/extract-text`, formData, {
+          headers: formData.getHeaders(),
+          maxContentLength: Infinity,
+          maxBodyLength: Infinity,
+          timeout: 30000
+        });
+      };
+
+      let mlResponse;
+      try {
+        mlResponse = await sendToML();
+      } catch (firstErr) {
+        console.log('ML Engine first attempt failed, retrying...', firstErr.message);
+        // Wait 1 second and retry
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        mlResponse = await sendToML();
+      }
 
       resume.extractedText = mlResponse.data.extracted_text || '';
       resume.processedText = mlResponse.data.processed_text || '';
       resume.skills = mlResponse.data.skills || [];
       await resume.save();
+      console.log(`Resume processed: ${resume.skills.length} skills found`);
     } catch (mlError) {
       console.error('ML Engine text extraction failed:', mlError.message);
       // Resume is still saved, just without extracted text
