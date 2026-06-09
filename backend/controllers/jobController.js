@@ -1,5 +1,8 @@
 const Job = require('../models/Job');
 
+// Escape special regex characters to prevent ReDoS attacks
+const escapeRegex = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
 // @desc    Create a job posting
 // @route   POST /api/jobs
 const createJob = async (req, res, next) => {
@@ -32,14 +35,15 @@ const getJobs = async (req, res, next) => {
     let query = { status: 'active' };
 
     if (search) {
+      const escaped = escapeRegex(search);
       query.$or = [
-        { title: { $regex: search, $options: 'i' } },
-        { company: { $regex: search, $options: 'i' } },
-        { description: { $regex: search, $options: 'i' } }
+        { title: { $regex: escaped, $options: 'i' } },
+        { company: { $regex: escaped, $options: 'i' } },
+        { description: { $regex: escaped, $options: 'i' } }
       ];
     }
     if (jobType) query.jobType = jobType;
-    if (location) query.location = { $regex: location, $options: 'i' };
+    if (location) query.location = { $regex: escapeRegex(location), $options: 'i' };
 
     const jobs = await Job.find(query)
       .populate('recruiterId', 'name email')

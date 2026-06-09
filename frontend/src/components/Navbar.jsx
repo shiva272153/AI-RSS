@@ -28,7 +28,7 @@ export default function Navbar() {
           {!user ? (
             <>
               <Link to="/login" className={`nav-link ${isActive('/login') ? 'nav-link-active' : ''}`}>Login</Link>
-              <Link to="/register" className="btn btn-primary btn-sm">Get Started</Link>
+              <Link to="/" className="btn btn-primary btn-sm">Get Started</Link>
             </>
           ) : (
             <>
@@ -53,11 +53,15 @@ export default function Navbar() {
                 </>
               )}
               <div className="nav-divider"></div>
-              <div className="nav-user">
-                <FiUser size={14} />
+              <Link to="/profile" className={`nav-user ${isActive('/profile') ? 'nav-user-active' : ''}`} title="Edit Profile">
+                {user.profilePic ? (
+                  <img src={`/${user.profilePic}`} alt={user.name} className="navbar-avatar" />
+                ) : (
+                  <FiUser size={14} />
+                )}
                 <span className="nav-user-name">{user.name}</span>
                 <span className="badge badge-primary">{user.role}</span>
-              </div>
+              </Link>
               <button onClick={handleLogout} className="btn btn-secondary btn-sm" id="logout-btn">
                 <FiLogOut size={14} /> <span>Logout</span>
               </button>

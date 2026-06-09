@@ -4,11 +4,16 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 
-# Download required NLTK data (only needed once)
-nltk.download('punkt', quiet=True)
-nltk.download('punkt_tab', quiet=True)
-nltk.download('stopwords', quiet=True)
-nltk.download('wordnet', quiet=True)
+# Download required NLTK data only if not already present
+def _ensure_nltk_data():
+    packages = ['punkt', 'punkt_tab', 'stopwords', 'wordnet']
+    for pkg in packages:
+        try:
+            nltk.data.find(f'tokenizers/{pkg}' if 'punkt' in pkg else f'corpora/{pkg}')
+        except LookupError:
+            nltk.download(pkg, quiet=True)
+
+_ensure_nltk_data()
 
 
 def clean_text(text):

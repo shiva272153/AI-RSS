@@ -3,7 +3,10 @@ const errorHandler = (err, req, res, next) => {
 
   // Multer file size error
   if (err.code === 'LIMIT_FILE_SIZE') {
-    return res.status(400).json({ message: 'File too large. Maximum size is 5MB.' });
+    const limitMessage = req.originalUrl.includes('profile-pic') 
+      ? 'File too large. Maximum size is 200KB.' 
+      : 'File too large. Maximum size is 5MB.';
+    return res.status(400).json({ message: limitMessage });
   }
 
   // Multer file type error

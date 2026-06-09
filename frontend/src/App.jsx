@@ -11,6 +11,9 @@ import ResumeUpload from './pages/ResumeUpload';
 import JobListings from './pages/JobListings';
 import CreateJob from './pages/CreateJob';
 import CandidateRankings from './pages/CandidateRankings';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
+import Profile from './pages/Profile';
 
 function ProtectedRoute({ children, role }) {
   const { user, loading } = useAuth();
@@ -30,6 +33,9 @@ function AppRoutes() {
       <Route path="/" element={<Home />} />
       <Route path="/login" element={user ? <Navigate to={user.role === 'candidate' ? '/candidate/dashboard' : '/recruiter/dashboard'} /> : <Login />} />
       <Route path="/register" element={user ? <Navigate to={user.role === 'candidate' ? '/candidate/dashboard' : '/recruiter/dashboard'} /> : <Register />} />
+      <Route path="/forgot-password" element={user ? <Navigate to={user.role === 'candidate' ? '/candidate/dashboard' : '/recruiter/dashboard'} /> : <ForgotPassword />} />
+      <Route path="/reset-password" element={user ? <Navigate to={user.role === 'candidate' ? '/candidate/dashboard' : '/recruiter/dashboard'} /> : <ResetPassword />} />
+      <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
 
       {/* Candidate Routes */}
       <Route path="/candidate/dashboard" element={<ProtectedRoute role="candidate"><CandidateDashboard /></ProtectedRoute>} />

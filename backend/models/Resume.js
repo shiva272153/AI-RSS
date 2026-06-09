@@ -29,6 +29,15 @@ const resumeSchema = new mongoose.Schema({
   },
   skills: [{
     type: String
+  }],
+  education: [{
+    type: String
+  }],
+  experience: [{
+    type: String
+  }],
+  certifications: [{
+    type: String
   }]
 }, {
   timestamps: true

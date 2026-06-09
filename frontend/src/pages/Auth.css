@@ -73,3 +73,94 @@
     gap: 0;
   }
 }
+
+/* ============ FORGOT PASSWORD LINK ============ */
+.forgot-link {
+  text-align: right;
+  margin-top: 0.5rem;
+}
+
+.forgot-link a {
+  font-size: 0.8125rem;
+  color: var(--primary-400);
+  transition: color var(--transition-fast);
+}
+
+.forgot-link a:hover {
+  color: var(--primary-300);
+}
+
+/* ============ OTP INPUT ============ */
+.otp-input-group {
+  display: flex;
+  justify-content: center;
+  gap: 0.625rem;
+  margin: 1.5rem 0 2rem;
+}
+
+.otp-digit {
+  width: 52px;
+  height: 60px;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-family: 'Courier New', monospace;
+  color: var(--text-primary);
+  background: var(--bg-glass);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-md);
+  outline: none;
+  transition: all var(--transition-fast);
+  caret-color: var(--primary-400);
+}
+
+.otp-digit:focus {
+  border-color: var(--primary-500);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2), var(--shadow-glow);
+  background: rgba(99, 102, 241, 0.05);
+}
+
+.otp-digit:not(:placeholder-shown) {
+  border-color: var(--primary-400);
+}
+
+/* ============ RESEND BUTTON ============ */
+.resend-btn {
+  background: none;
+  border: none;
+  color: var(--primary-400);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  font-family: var(--font-family);
+  transition: color var(--transition-fast);
+}
+
+.resend-btn:hover:not(:disabled) {
+  color: var(--primary-300);
+  text-decoration: underline;
+}
+
+.resend-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.otp-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* ============ OTP RESPONSIVE ============ */
+@media (max-width: 400px) {
+  .otp-digit {
+    width: 42px;
+    height: 50px;
+    font-size: 1.25rem;
+  }
+  .otp-input-group {
+    gap: 0.375rem;
+  }
+}

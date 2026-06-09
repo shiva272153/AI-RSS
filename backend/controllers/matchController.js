@@ -72,41 +72,53 @@ const calculateAllMatches = async (req, res, next) => {
       return res.status(400).json({ message: 'No resumes available for matching' });
     }
 
+    // Process a single resume against the job
+    const processResume = async (resume) => {
+      const mlResponse = await axios.post(`${ML_ENGINE_URL}/calculate-match`, {
+        resume_text: resume.processedText || resume.extractedText,
+        job_description: `${job.title} ${job.description} ${job.requirements}`,
+        resume_skills: resume.skills,
+        required_skills: job.requiredSkills
+      });
+
+      const { match_score, matched_skills, missing_skills } = mlResponse.data;
+
+      const match = await Match.findOneAndUpdate(
+        { resumeId: resume._id, jobId: job._id },
+        {
+          resumeId: resume._id,
+          jobId: job._id,
+          candidateId: resume.userId._id,
+          matchScore: Math.round(match_score * 100) / 100,
+          matchedSkills: matched_skills,
+          missingSkills: missing_skills
+        },
+        { upsert: true, new: true }
+      );
+
+      return {
+        candidateName: resume.userId.name,
+        candidateEmail: resume.userId.email,
+        matchScore: match.matchScore,
+        matchedSkills: match.matchedSkills,
+        missingSkills: match.missingSkills
+      };
+    };
+
+    // Process in batches of 5 for parallelism without overwhelming ML engine
+    const BATCH_SIZE = 5;
     const results = [];
 
-    for (const resume of resumes) {
-      try {
-        const mlResponse = await axios.post(`${ML_ENGINE_URL}/calculate-match`, {
-          resume_text: resume.processedText || resume.extractedText,
-          job_description: `${job.title} ${job.description} ${job.requirements}`,
-          resume_skills: resume.skills,
-          required_skills: job.requiredSkills
-        });
+    for (let i = 0; i < resumes.length; i += BATCH_SIZE) {
+      const batch = resumes.slice(i, i + BATCH_SIZE);
+      const batchResults = await Promise.allSettled(batch.map(processResume));
 
-        const { match_score, matched_skills, missing_skills } = mlResponse.data;
-
-        const match = await Match.findOneAndUpdate(
-          { resumeId: resume._id, jobId: job._id },
-          {
-            resumeId: resume._id,
-            jobId: job._id,
-            candidateId: resume.userId._id,
-            matchScore: Math.round(match_score * 100) / 100,
-            matchedSkills: matched_skills,
-            missingSkills: missing_skills
-          },
-          { upsert: true, new: true }
-        );
-
-        results.push({
-          candidateName: resume.userId.name,
-          candidateEmail: resume.userId.email,
-          matchScore: match.matchScore,
-          matchedSkills: match.matchedSkills,
-          missingSkills: match.missingSkills
-        });
-      } catch (mlError) {
-        console.error(`Match calculation failed for resume ${resume._id}:`, mlError.message);
+      for (const result of batchResults) {
+        if (result.status === 'fulfilled') {
+          results.push(result.value);
+        } else {
+          console.error('Match calculation failed:', result.reason?.message);
+        }
       }
     }
 

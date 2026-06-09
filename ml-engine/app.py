@@ -8,6 +8,7 @@ from matcher import (
     is_model_trained, get_model_info, predict_category
 )
 from skill_extractor import extract_skills, compare_skills
+from info_extractor import extract_structured_info
 
 app = Flask(__name__)
 CORS(app)
@@ -75,10 +76,16 @@ def extract_text_endpoint():
         # Predict category (if model is trained)
         category_prediction = predict_category(processed_text)
 
+        # Extract structured details (Education, Experience, Certifications)
+        struct_data = extract_structured_info(extracted_text)
+
         response = {
             'extracted_text': extracted_text,
             'processed_text': processed_text,
-            'skills': skills
+            'skills': skills,
+            'education': struct_data.get('education', []),
+            'experience': struct_data.get('experience', []),
+            'certifications': struct_data.get('certifications', [])
         }
 
         if category_prediction:

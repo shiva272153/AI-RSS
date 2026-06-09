@@ -5,6 +5,14 @@ export const authService = {
   login: (data) => api.post('/auth/login', data),
   getProfile: () => api.get('/auth/profile'),
   updateProfile: (data) => api.put('/auth/profile', data),
+  forgotPassword: (data) => api.post('/auth/forgot-password', data),
+  verifyOTP: (data) => api.post('/auth/verify-otp', data),
+  resetPassword: (data) => api.post('/auth/reset-password', data),
+  deleteAccount: () => api.delete('/auth/profile'),
+  uploadProfilePic: (formData) => api.post('/auth/profile-pic', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' }
+  }),
+  deleteProfilePic: () => api.delete('/auth/profile-pic'),
 };
 
 export const resumeService = {

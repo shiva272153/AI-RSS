@@ -134,6 +134,42 @@ export default function ResumeUpload() {
               </div>
             )}
 
+            {/* Extracted Experience */}
+            {resume.experience?.length > 0 && (
+              <div className="resume-skills card" style={{ marginTop: '1.5rem' }}>
+                <h3>Extracted Experience</h3>
+                <ul className="extracted-list" style={{ paddingLeft: '1.25rem', marginTop: '1rem', listStyleType: 'disc' }}>
+                  {resume.experience.map((exp, i) => (
+                    <li key={i} className="text-secondary" style={{ marginBottom: '0.5rem', fontSize: '0.9375rem' }}>{exp}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Extracted Education */}
+            {resume.education?.length > 0 && (
+              <div className="resume-skills card" style={{ marginTop: '1.5rem' }}>
+                <h3>Extracted Education</h3>
+                <ul className="extracted-list" style={{ paddingLeft: '1.25rem', marginTop: '1rem', listStyleType: 'disc' }}>
+                  {resume.education.map((edu, i) => (
+                    <li key={i} className="text-secondary" style={{ marginBottom: '0.5rem', fontSize: '0.9375rem' }}>{edu}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Extracted Certifications */}
+            {resume.certifications?.length > 0 && (
+              <div className="resume-skills card" style={{ marginTop: '1.5rem' }}>
+                <h3>Extracted Certifications</h3>
+                <ul className="extracted-list" style={{ paddingLeft: '1.25rem', marginTop: '1rem', listStyleType: 'disc' }}>
+                  {resume.certifications.map((cert, i) => (
+                    <li key={i} className="text-secondary" style={{ marginBottom: '0.5rem', fontSize: '0.9375rem' }}>{cert}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
             {/* Extracted Text Preview */}
             {resume.extractedText && (
               <div className="resume-text card">

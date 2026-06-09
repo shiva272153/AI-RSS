@@ -2,6 +2,7 @@ const Resume = require('../models/Resume');
 const axios = require('axios');
 const path = require('path');
 const fs = require('fs');
+const FormData = require('form-data');
 
 const ML_ENGINE_URL = process.env.ML_ENGINE_URL || 'http://localhost:5001';
 
@@ -37,7 +38,6 @@ const uploadResume = async (req, res, next) => {
     // Send file to ML engine for text extraction (with retry)
     try {
       const absolutePath = path.join(__dirname, '..', resume.filePath);
-      const FormData = require('form-data');
 
       const sendToML = async () => {
         const formData = new FormData();
@@ -68,8 +68,11 @@ const uploadResume = async (req, res, next) => {
       resume.extractedText = mlResponse.data.extracted_text || '';
       resume.processedText = mlResponse.data.processed_text || '';
       resume.skills = mlResponse.data.skills || [];
+      resume.education = mlResponse.data.education || [];
+      resume.experience = mlResponse.data.experience || [];
+      resume.certifications = mlResponse.data.certifications || [];
       await resume.save();
-      console.log(`Resume processed: ${resume.skills.length} skills found`);
+      console.log(`Resume processed: ${resume.skills.length} skills, ${resume.education.length} edu, ${resume.experience.length} exp, ${resume.certifications.length} certs found`);
     } catch (mlError) {
       console.error('ML Engine text extraction failed:', mlError.message);
       // Resume is still saved, just without extracted text
